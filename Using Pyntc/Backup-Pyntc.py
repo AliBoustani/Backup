@@ -28,10 +28,7 @@ try:
         }
         ios_device = NTC(host=ip, username=username, password=password,device_type="cisco_ios_ssh")
         try:
-            ios_device.open()
-            output = ios_device.running_config
-            with open("DeviceIP__"+ ip, "w") as file:
-                file.write(output)
+            ios_device.backup_running_config("Device_IP_"+ ip +".cfg")
                 
         except (AuthenticationException):
             print "Authentication failed for:  " + ip
