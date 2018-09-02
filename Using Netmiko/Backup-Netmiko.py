@@ -7,93 +7,68 @@ from paramiko.ssh_exception import SSHException
 try:
     ans=True
     while ans:
-        print("""\n Vendors List:  \n
+        print"""\n>>>>> Vendors List <<<<<\n
         1.Cisco
         2.Juniper
         3.Arista
         4.HP
         5.Exit/Quite
-        """)
-        ans=raw_input(" Choose one of them!? ")
+        """
+        ans=raw_input("\n>>>>> Choose one of them? : ")
         if ans=="1":
             ans2=True
             while ans2:
-                print("""\n>>>>> Which Cisco device do you have? \n
+                print """\n>>>>> Which Cisco device do you have? \n
                   1.Cisco IOS
                   2.Cisco IOS-XE
                   3.Cisco IOS-XR
                   4.Cisco NX-OS
                   5.Cisco ASA
                   6.Back to Vendors
-                  7.Exit/Quit
-                  """)
-                ans2=raw_input(" Choose one of the above mentioned device types? ")
-                if ans2=="1":
-                    print("\n>>>>>You Choosed 'Cisco IOS' <<<<<'\n")
+                  7.Exit
+                  """
+                ans2=raw_input("\n>>>>> Choose one of the above mentioned device types? : ")
+                ans2 = int(ans2)
+                devtypes = [0,"cisco_ios","cisco_xe","cisco_xr","cisco_nxos","cisco_asa"]
+                if 0<ans2<6:
+                    devtype = devtypes[ans2]
+                    print "\n>>>>>> You Choosed %s <<<<<<\n" %devtype
                     ans = False
-                    devtype = "cisco_ios"
                     cmd = "show run"
                     break
-                elif ans2=="2":
-                    print("\n>>>>>You Choosed 'Cisco IOS-XE' <<<<<'\n")
-                    ans = False
-                    devtype = "cisco_xe"
-                    cmd = "show run"
+                elif ans2== 6:
                     break
-                elif ans2=="3":
-                    print("\n>>>>>You Choosed 'Cisco IOS-XR' <<<<<'\n")
-                    ans = False
-                    devtype = "cisco_xr"
-                    cmd = "show run"
-                    break
-                elif ans2=="4":
-                    print("\n>>>>>You Choosed 'Cisco NXOS' <<<<<'\n")
-                    ans = False
-                    devtype = "cisco_nxos"
-                    cmd = "show run"
-                    break
-                elif ans2=="5":
-                    print("\n>>>>>You Choosed 'Cisco ASA' <<<<<'\n")
-                    ans = False
-                    devtype = "cisco_asa"
-                    cmd = "show run"
-                    ans = False
-                    break
-                elif ans2=="6":
-                    break
-                elif ans2=="7":
-                    print("\n Goodbye") 
-                    ans2 = False
-                    ans = None
-                    break
+                elif ans2== 7:
+                    print "\n>>>>>>>>>> Goodbye !! <<<<<<<<<<" 
+                    exit()
                 else:
-                    print("\n NOT Valid !!! Please Try again")
+                    print "\n NOT Valid !!! Please Try again"
         elif ans=="2":
-            print("\n>>>>>You Choosed 'Juniper' <<<<<'\n")
+            print "\n>>>>> You Choosed 'Juniper' <<<<<'\n"
             ans = False
             devtype = "juniper"
             cmd = "show configuration"
             ans = False
             break
         elif ans=="3":
-            print("\n Arista Devices does not supported yet")
+            print "\n>>>>> Arista Devices does not supported yet <<<<<"
         elif ans=="4":
-            print("\n Hp Devices does not supported yet") 
+            print "\n>>>>> Hp Devices does not supported yet <<<<<"
         elif ans=="5":
-            print("\n Till next time") 
+            print "\n>>>>>>>>>> Goodbye !! <<<<<<<<<<" 
             ans = None
-    
+            exit()
         else:
-            print("\n Not Valid Choice Try again")  
+            print "\n>>>>> Not Valid Choice Try again <<<<<"  
+            continue
 
-
-    username = raw_input("\n Please Enter Your SSH Usernmae : ")
+    username = raw_input("\n>>>>> Please Enter Your SSH Usernmae : ")
     password = getpass()
     
     print ". . . . . . . . . . . . \n"
     print ". . . . . . . . . . . . \n"
     
-    IPs = raw_input("\n Please Enter name of the file that contains IP addresses : ")
+    IPs = raw_input("\n>>>>> Please Enter name of the file that contains IP addresses : ")
     
     with open(IPs) as f:
         myIPs = f.read().splitlines()
@@ -112,30 +87,30 @@ try:
             output = net_connect.send_command(cmd)
             with open("DeviceIP__"+ ip, "w") as file:
                 file.write(output)
-                
+            
         except (AuthenticationException):
-            print "Authentication failed for:  " + ip
+            print "/n!!!!!!!!!! Authentication failed for: %s !!!!!!!!!!\n" %ip
             continue
         
         except (NetMikoTimeoutException):
-            print "Time out to device: " + ip
+            print "/n!!!!!!!!!! Time out to device: %s !!!!!!!!!!\n" %ip
             continue
             
         except (EOFError):
-            print "End of file while attempting device: " + ip
+            print "/n!!!!!!!!!! End of file while attempting device: %s !!!!!!!!!!\n" %ip
             continue
         
         except (SSHException):
-            print "SSH problem!!! Check SSH on device " + ip
+            print "/n!!!!!!!!!! SSH problem!!! Check SSH on device %s !!!!!!!!!!\n" %ip
             continue
-        
+        except (IOError):
+            print "/n!!!!!!!!!! Some Other Error !!!!!!!!!!\n"
+            continue   
         except Exception as otherError:
-            print "Some Other Error !!! : " + otherError
+            print "/n!!!!!!!!!! Some Other Error !!!!!!!!!!\n"
             continue
 except KeyboardInterrupt:
     print "\n\nProgram aborted by user. Exiting...\n"  
-
-
 
 
 
