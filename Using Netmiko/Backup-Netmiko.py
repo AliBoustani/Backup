@@ -51,9 +51,9 @@ try:
             ans = False
             break
         elif ans=="3":
-            print "\n>>>>> Arista Devices does not supported yet <<<<<"
+            print "\n>>>>> Sorry :( Arista Devices do not supported yet <<<<<"
         elif ans=="4":
-            print "\n>>>>> Hp Devices does not supported yet <<<<<"
+            print "\n>>>>> Sorry :( Hp Devices do not supported yet <<<<<"
         elif ans=="5":
             print "\n>>>>>>>>>> Goodbye !! <<<<<<<<<<" 
             ans = None
@@ -65,16 +65,15 @@ try:
     username = raw_input("\n>>>>> Please Enter Your SSH Usernmae : ")
     password = getpass()
     
-    print ". . . . . . . . . . . . \n"
-    print ". . . . . . . . . . . . \n"
+    print "\n>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<\n"
     
-    IPs = raw_input("\n>>>>> Please Enter name of the file that contains IP addresses : ")
+    IPs = raw_input("\n>>>>> Please enter the name of the file that contains IP addresses : ")
     
     with open(IPs) as f:
         myIPs = f.read().splitlines()
     
     for IP in myIPs:
-        print "Establishing Connection to . .  " + IP
+        print "\n >>>>> Establishing Connection to . . . " + IP
         ip = IP
         device = {
             "device_type": devtype,
@@ -102,15 +101,12 @@ try:
         
         except (SSHException):
             print "/n!!!!!!!!!! SSH problem!!! Check SSH on device %s !!!!!!!!!!\n" %ip
-            continue
-        except (IOError):
-            print "/n!!!!!!!!!! Some Other Error !!!!!!!!!!\n"
-            continue   
+            continue  
         except Exception as otherError:
             print "/n!!!!!!!!!! Some Other Error !!!!!!!!!!\n"
             continue
 except KeyboardInterrupt:
-    print "\n\nProgram aborted by user. Exiting...\n"  
+    print "\n\n!!!!!!!!!! Program aborted by user. Exiting... !!!!!!!!!!\n"  
 
 
 
