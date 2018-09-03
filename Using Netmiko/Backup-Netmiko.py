@@ -3,13 +3,12 @@ from paramiko.ssh_exception import SSHException
 
 
 try:    
-    #Module for output coloring
     from netmiko import ConnectHandler
     from netmiko.ssh_exception import NetMikoTimeoutException
     from netmiko.ssh_exception import AuthenticationException
 
 except ImportError:
-    print "\n### Module colorama needs to be installed on your system. ###\n"
+    print "\n### Module Netmiko needs to be installed on your system. ###\n"
     print "### Download it from: https://github.com/ktbyers/netmiko ###\n"
     print "### Or just install it via pip:  ' pip install netmiko '   ###\n"
     sys.exit()
