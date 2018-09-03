@@ -1,8 +1,18 @@
 from getpass import getpass
-from netmiko import ConnectHandler
-from netmiko.ssh_exception import NetMikoTimeoutException
-from netmiko.ssh_exception import AuthenticationException
 from paramiko.ssh_exception import SSHException
+
+
+try:    
+    #Module for output coloring
+    from netmiko import ConnectHandler
+    from netmiko.ssh_exception import NetMikoTimeoutException
+    from netmiko.ssh_exception import AuthenticationException
+
+except ImportError:
+    print "\n### Module colorama needs to be installed on your system. ###\n"
+    print "### Download it from: https://github.com/ktbyers/netmiko ###\n"
+    print "### Or just install it via pip:  ' pip install netmiko '   ###\n"
+    sys.exit()
 
 try:
     ans=True
@@ -19,14 +29,14 @@ try:
             ans2=True
             while ans2:
                 print """\n>>>>> Which Cisco device do you have? \n
-                  1.Cisco IOS
-                  2.Cisco IOS-XE
-                  3.Cisco IOS-XR
-                  4.Cisco NX-OS
-                  5.Cisco ASA
-                  6.Back to Vendors
-                  7.Exit
-                  """
+        1.Cisco IOS
+        2.Cisco IOS-XE
+        3.Cisco IOS-XR
+        4.Cisco NX-OS
+        5.Cisco ASA
+        6.Back to Vendors
+        7.Exit
+        """
                 ans2=raw_input("\n>>>>> Choose one of the above mentioned device types? : ")
                 ans2 = int(ans2)
                 devtypes = [0,"cisco_ios","cisco_xe","cisco_xr","cisco_nxos","cisco_asa"]
@@ -39,7 +49,7 @@ try:
                 elif ans2== 6:
                     break
                 elif ans2== 7:
-                    print "\n>>>>>>>>>> Goodbye !! <<<<<<<<<<" 
+                    print "\n>>>>>>>>>> Goodbye !! <<<<<<<<<<\n" 
                     exit()
                 else:
                     print "\n NOT Valid !!! Please Try again"
@@ -55,7 +65,7 @@ try:
         elif ans=="4":
             print "\n>>>>> Sorry :( Hp Devices do not supported yet <<<<<"
         elif ans=="5":
-            print "\n>>>>>>>>>> Goodbye !! <<<<<<<<<<" 
+            print "\n>>>>>>>>>> Goodbye !! <<<<<<<<<<\n" 
             ans = None
             exit()
         else:
